@@ -20,41 +20,41 @@ C=[1 0 0 0 0 0;
 D=zeros(2,2);
 sys = ss(A,B,C,D);
 tf(sys)
-%Ghesmate 1:--------------------------
+%Section 1:--------------------------
 %s=tf('s');
 syms s;
 G= [(1.359/(s^3+0.9973*s^2+4.786*s+4.278)) 0;
     (1.617/(s^3+5.909*s^2+4.546*s)) (3.6/(s^3+6*s^2+5*s));
     ];
-%Ghesmate 2:---------------------------
+%Section 2:---------------------------
 pzmap(sys);
-%Ghesmate 3:---------------------------
+%Section 3:---------------------------
 J = jordan(A);
 disp('Jordan Matrix of A is:');
 disp(J);
-%Ghesmate 4:---------------------------
+%Section 4:---------------------------
 F=(s*eye(6,6)-A);
 phi=ilaplace(F);
 syms t;
 f= expm(A*t);
 disp('Transition Matrix is:');
 disp(f);
-%Ghesmate 6:---------------------------
- Co=ctrb(A,B); %Matrix of Controlpaziri
- rCo=rank(Co);  %Rank Control
- Ob=obsv(A,C);  %Matrix of Royatpaziri
- rOb=rank(Ob); %Rank Royat
- disp('Matrix of Controlpaziri:');
+%Section 6:---------------------------
+ Co=ctrb(A,B); %Controllability Matrix
+ rCo=rank(Co);  %Rank of Controllability Matrix
+ Ob=obsv(A,C);  %Observability Matrix
+ rOb=rank(Ob); %Rank of Observability Matrix
+ disp('Controllability Matrix:');
  disp(Co);
- disp('Rank of Controlpaziri Matrix:');
+ disp('Rank of Controllability Matrix:');
  disp(rCo);
  disp('It is Controlable since it is Full-rank.')
-  disp('Matrix of Royatpaziri:');
+  disp('Observability Matrix:');
  disp(Co);
- disp('Rank of Royatpaziri Matrix:');
+ disp('Rank of Observability Matrix:');
  disp(rCo);
- disp('It is Royatable since it is Full-rank.')
- %Ghesmate 7:-----------------------------
+ disp('It is Observable since it is Full-rank.')
+ %Section 7:-----------------------------
 if isstable(G(1,1))
     disp('G(1,1) is Stable')
 else
@@ -75,15 +75,15 @@ if isstable(G(2,2))
 else
     disp('G(2,2) is not Stable')
 end
-%ghesmate 8:------------------------------------------
+%Section 8:------------------------------------------
  e=eig(A);
  disp('Eigenvalues of A are:');
  disp(e);
- %Ghesmate emtiazi:-----------------------------------
-p=[-8;     % Ghotbhaye desire 
+ %Section emtiazi:-----------------------------------
+p=[-8;     % desired poles
     -8;
     -7;
     -5;
     -11;
     -9;];
-K=place(A,B,p);   % Baraye Halgheye feedback dar simulink
+K=place(A,B,p);   % For feedback in the simulink simulation
